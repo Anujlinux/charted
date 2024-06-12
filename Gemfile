@@ -62,3 +62,5 @@ gem "dotenv-rails", "~> 3.1"
 gem "esbuild-rails", "~> 0.1.4"
 
 gem "jsbundling-rails", "~> 1.3"
+
+gem "devise", "~> 4.9"
