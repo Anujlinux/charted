@@ -1,30 +1,35 @@
 // Entry point for the build script in your package.json
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle"
-import Highcharts from "highcharts"
+import "@hotwired/turbo-rails"
+import "./controllers"
+import * as Highcharts from "highcharts"
 
-new bootstrap.Popover(document.querySelector('[data-bs-toggle="popover"]'), {
-  trigger: 'hover'
-})
+// new bootstrap.Popover(document.querySelector('[data-bs-toggle="popover"]'), {
+//   trigger: 'hover'
+// })
 
-const exampleModal = document.getElementById('exampleModal')
+// const exampleModal = document.getElementById('exampleModal')
+// if (exampleModal) {
+//   exampleModal.addEventListener('show.bs.modal', event => {
+//     // Button that triggered the modal
+//     const button = event.relatedTarget
+//     // Extract info from data-bs-* attributes
+//     const recipient = button.getAttribute('data-bs-whatever')
+//     // If necessary, you could initiate an Ajax request here
+//     // and then do the updating in a callback.
+
+//     // Update the modal's content.
+//     const modalTitle = exampleModal.querySelector('.modal-title')
+//     const modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+//     modalTitle.textContent = `New message to ${recipient}`
+//     modalBodyInput.value = recipient
+//   })
+// }
+const exampleModal = document.getElementById('container')
 if (exampleModal) {
-  exampleModal.addEventListener('show.bs.modal', event => {
-    // Button that triggered the modal
-    const button = event.relatedTarget
-    // Extract info from data-bs-* attributes
-    const recipient = button.getAttribute('data-bs-whatever')
-    // If necessary, you could initiate an Ajax request here
-    // and then do the updating in a callback.
-
-    // Update the modal's content.
-    const modalTitle = exampleModal.querySelector('.modal-title')
-    const modalBodyInput = exampleModal.querySelector('.modal-body input')
-
-    modalTitle.textContent = `New message to ${recipient}`
-    modalBodyInput.value = recipient
-  })
+  console.log("hello")
 }
-
 // Example to create a simple line chart in a div#container:
 const mychart = Highcharts.chart('container', {
   chart: {
