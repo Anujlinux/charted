@@ -1,0 +1,157 @@
+<%= form_with(model: chart) do |form| %>
+  <% if chart.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(chart.errors.count, "error") %> prohibited this chart from being saved:</h2>
+
+      <ul>
+        <% chart.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :subtitle, style: "display: block" %>
+    <%= form.text_field :subtitle %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :chart_type_id, style: "display: block" %>
+    <%= form.select :chart_type_id, options_for_select(ChartType.all.map { |ct| [ct.name, ct.id] }), {}, class: "form-control" %>
+  </div>
+
+  <table id="myTable">
+    <tbody>
+      <tr>
+        <td><input type="text" name="row1col1"></td>
+        <td><input type="text" name="row1col2"></td>
+        <td><button id="addRowBtn" onclick="addRow(event)">Add Row</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <button onclick="addCol(event)">Add Column</button>
+
+  <div>
+    <%= form.label :chart_data, style: "display: block" %>
+    <%= form.hidden_field :chart_data, id: "chart_data_field" %>
+  </div>
+
+  <div>
+    <%= form.label :chart_settings, style: "display: block" %>
+    <%= form.text_field :chart_settings %>
+  </div>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.hidden_field :user_id, value: current_user.id %>
+  </div>
+
+  <div>
+    <%= form.label :data_source_type %>
+    <%= form.select :data_source_type, Chart.data_source_types.keys.map { |type| [type.humanize, type] }, {}, class: 'form-control' %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+<script>
+function addRow(event) {
+  event.preventDefault(); // Prevent default form submission
+
+  const table = document.getElementById('myTable');
+  const tbody = table.getElementsByTagName('tbody')[0];
+  const rowCount = tbody.rows.length;
+  const colCount = table.rows[0].cells.length - 1; // Exclude the "Add Row" button column
+
+  // Create new table row
+  const newRow = document.createElement('tr');
+
+  // Create new cells for the row
+  for (let i = 0; i < colCount; i++) {
+    const newCell = document.createElement('td');
+    newCell.innerHTML = `<input type="text" name="row${rowCount + 1}col${i + 1}">`;
+    newRow.appendChild(newCell);
+  }
+
+  // Create and append "Add Row" button to the new row
+  const addRowButton = document.createElement('td');
+  addRowButton.innerHTML = '<button onclick="addRow(event)">Add Row</button>';
+  newRow.appendChild(addRowButton);
+
+  tbody.appendChild(newRow);
+}
+
+function addCol(event) {
+  event.preventDefault(); // Prevent default form submission
+
+  const table = document.getElementById('myTable');
+  const tbody = table.getElementsByTagName('tbody')[0];
+  const rowCount = tbody.rows.length;
+  const firstRow = tbody.rows[0];
+  const colCount = firstRow.cells.length;
+
+  // Loop through existing rows and add new cells with inputs
+  for (let i = 0; i < rowCount; i++) {
+    const newCell = document.createElement('td');
+    newCell.innerHTML = `<input type="text" name="row${i + 1}col${colCount}">`;
+    const row = tbody.rows[i];
+    const lastCellIndex = row.cells.length - 1;
+    const lastCell = row.cells[lastCellIndex];
+
+    if (lastCell.getElementsByTagName('button').length > 0) {
+      row.insertBefore(newCell, lastCell);
+    } else {
+      row.appendChild(newCell);
+    }
+  }
+}
+
+function summarizeTableToJson() {
+  const table = document.getElementById('myTable');
+  const tbody = table.getElementsByTagName('tbody')[0];
+  const firstRow = tbody.rows[0];
+  const rowCount = tbody.rows.length;
+
+  // Extract column headers from the first table row
+  const columns = [];
+  for (let i = 0; i < firstRow.cells.length - 1; i++) {
+    const cell = firstRow.cells[i];
+    const inputValue = cell.getElementsByTagName('input')[0].value;
+    columns.push(inputValue);
+  }
+
+  // Extract data from table cells in remaining rows
+  const rows = [];
+  for (let i = 1; i < rowCount; i++) {
+    const rowData = [];
+    const row = tbody.rows[i];
+    for (let j = 0; j < row.cells.length - 1; j++) {
+      const inputValue = row.cells[j].getElementsByTagName('input')[0].value;
+      rowData.push(inputValue);
+    }
+    rows.push(rowData);
+  }
+
+  // Create the JSON object and set the hidden field value
+  const jsonData = { columns, rows };
+  document.getElementById('chart_data_field').value = JSON.stringify(jsonData);
+}
+
+// Call summarizeTableToJson before form submission (e.g., using an event listener)
+const form = document.querySelector('form');
+form.addEventListener('submit', function(event) {
+  summarizeTableToJson();
+});
+</script>

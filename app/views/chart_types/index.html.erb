@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Chart types</h1>
+
+<div id="chart_types">
+  <% @chart_types.each do |chart_type| %>
+    <%= render chart_type %>
+    <p>
+      <%= link_to "Show this chart type", chart_type %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New chart type", new_chart_type_path %>

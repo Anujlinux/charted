@@ -10,9 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_12_190211) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_13_213155) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "chart_types", force: :cascade do |t|
+    t.string "name"
+    t.json "chart_settings"
+    t.json "chart_format"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "charts", force: :cascade do |t|
+    t.string "title"
+    t.string "subtitle"
+    t.text "description"
+    t.bigint "chart_type_id", null: false
+    t.json "chart_data"
+    t.json "chart_settings"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "data_source_type"
+    t.index ["chart_type_id"], name: "index_charts_on_chart_type_id"
+    t.index ["user_id"], name: "index_charts_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -26,4 +49,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_12_190211) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "charts", "chart_types"
+  add_foreign_key "charts", "users"
 end

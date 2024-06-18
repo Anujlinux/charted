@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @chart_type %>
+
+<div>
+  <%= link_to "Edit this chart type", edit_chart_type_path(@chart_type) %> |
+  <%= link_to "Back to chart types", chart_types_path %>
+
+  <%= button_to "Destroy this chart type", @chart_type, method: :delete %>
+</div>

@@ -1,0 +1,57 @@
+<%= form_with(model: chart_type, class: "form-group container") do |form| %>
+  <% if chart_type.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(chart_type.errors.count, "error") %> prohibited this chart_type from being saved:</h2>
+
+      <ul>
+        <% chart_type.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :chart_settings, style: "display: block", class: "form-label" %>
+    <%= form.text_field :chart_settings, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :x_axis, style: "display: block", class: "form-label" %>
+    <%= form.select :x_axis, options_for_select(chart_type.x_axis), {}, class: "form-control"%>
+  </div>
+
+  <div>
+    <%= form.label :y_axis, style: "display: block", class: "form-label" %>
+    <%= form.select :y_axis, options_for_select(chart_type.y_axis), {}, class: "form-control"%>
+  </div>
+
+  <div>
+    <%= form.label :x_axis_format, style: "display: block", class: "form-label" %>
+    <%= form.select :x_axis_format, options_for_select(chart_type.x_axis_format), {}, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :y_axis_format, style: "display: block", class: "form-label" %>
+    <%= form.select :y_axis_format, options_for_select(chart_type.y_axis_format), {}, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :x_limit, style: "display: block", class: "form-label" %>
+    <%= form.number_field :x_limit, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :y_limit, style: "display: block", class: "form-label" %>
+    <%= form.number_field :y_limit, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>

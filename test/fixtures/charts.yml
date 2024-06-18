@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  subtitle: MyString
+  description: MyText
+  chart_type: one
+  chart_data: 
+  chart_settings: 
+  user: one
+
+two:
+  title: MyString
+  subtitle: MyString
+  description: MyText
+  chart_type: two
+  chart_data: 
+  chart_settings: 
+  user: two
