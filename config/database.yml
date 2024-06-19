@@ -82,6 +82,4 @@ test:
 #
 production:
   <<: *default
-  database: charted_production
-  username: charted
-  password: <%= ENV["CHARTED_DATABASE_PASSWORD"] %>
+  url: <%= ENV["CHARTED_DATABASE_URL"] %>
