@@ -1,5 +1,6 @@
 class ChartTypesController < ApplicationController
   before_action :set_chart_type, only: %i[ show edit update destroy ]
+  before_action :check_user_id, except: %i[ show index]
   before_action :authenticate_user!
 
   # GET /chart_types or /chart_types.json
@@ -68,7 +69,13 @@ class ChartTypesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def chart_type_params
-      params.require(:chart_type).permit(:name, :chart_settings, :x_axis, :y_axis, :x_axis_format, :y_axis_format, :x_limit, :y_limit)
+      params.require(:chart_type).permit(:name, :display_name, :chart_settings, :x_axis, :y_axis, :x_axis_format, :y_axis_format, :x_limit, :y_limit)
+    end
+
+    def check_user_id
+      unless current_user.id == 1
+        redirect_to root_path, alert: 'You are not authorized to access this action.'
+      end
     end
 
     def build_chart_format_hash(params)

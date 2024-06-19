@@ -28,7 +28,7 @@
 
   <div>
     <%= form.label :chart_type_id, style: "display: block" %>
-    <%= form.select :chart_type_id, options_for_select(ChartType.all.map { |ct| [ct.name, ct.id] }), {}, class: "form-control" %>
+    <%= form.select :chart_type_id, options_for_select(ChartType.all.map { |ct| [ct.display_name, ct.id] }), {}, class: "form-control" %>
   </div>
 
   <table id="myTable">

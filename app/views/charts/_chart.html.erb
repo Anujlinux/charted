@@ -16,7 +16,7 @@
 
   <p>
     <strong>Chart type:</strong>
-    <%= ChartType.find(chart.chart_type_id).name %>
+    <%= ChartType.find(chart.chart_type_id).display_name %>
   </p>
 
   <p>
@@ -31,7 +31,7 @@
 
   <p>
     <strong>User:</strong>
-    <%= chart.user_id %>
+    <%= User.find(chart.user_id).email %>
   </p>
 
 </div>
