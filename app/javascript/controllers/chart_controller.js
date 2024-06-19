@@ -1,13 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
 import * as Highcharts from "highcharts"
+import "highcharts/highcharts-more"
+import 'highcharts/modules/funnel'
 // import "highcharts/modules"
 
 // Connects to data-controller="chart"
 export default class extends Controller {
   connect() {
     const chartData = JSON.parse(this.data.get("chart-data"))
-    const series_data = JSON.parse(this.data.get("series-data"))
-    const columns = chartData["columns"]
     console.log(chartData)
     Highcharts.chart(this.element, {
       chart: {

@@ -21,6 +21,7 @@ class ChartsController < ApplicationController
 
   # GET /charts/1/edit
   def edit
+    redirect_to chart_url(@chart), notice: "You are not authorized to Edit this chart" unless @chart.user_id == current_user.id
   end
 
   # POST /charts or /charts.json
@@ -58,7 +59,7 @@ class ChartsController < ApplicationController
 
   # DELETE /charts/1 or /charts/1.json
   def destroy
-    @chart.destroy!
+    @chart.destroy! if current_user.id == @chart.user_id
 
     respond_to do |format|
       format.html { redirect_to charts_url, notice: "Chart was successfully destroyed." }
