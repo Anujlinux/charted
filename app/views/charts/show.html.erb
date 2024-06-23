@@ -2,7 +2,16 @@
 
 <%= render @chart %>
 <div data-controller="chart"
-    data-chart-chart-data="<%= @chart_data.to_s %>">
+  data-chart-chart-data="<%= @chart_data.to_s %>">
+</div>
+<div data-controller="clipboard">
+  <h3>Embed This Chart</h3>
+  <textarea data-clipboard-target="source" readonly rows="3" style="width: 100%;">
+    <iframe src="<%= embed_chart_url(@chart) %>" width="600" height="400" frameborder="0"></iframe>
+  </textarea>
+  <button data-clipboard-target="button" data-action="click->clipboard#copy">
+    Copy Embed Code
+  </button>
 </div>
 <div>
   <%= link_to "Edit this chart", edit_chart_path(@chart) %> |

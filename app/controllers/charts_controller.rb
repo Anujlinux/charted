@@ -14,6 +14,12 @@ class ChartsController < ApplicationController
     p @chart_data
   end
 
+  def embed
+    @chart = Chart.find(params[:id])
+    @chart_data = ChartDataGenerator.chart_data(@chart).to_json
+    render layout: 'embed'
+  end
+
   # GET /charts/new
   def new
     @chart = Chart.new

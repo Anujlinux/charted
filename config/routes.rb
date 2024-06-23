@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :charts
+  resources :charts do 
+    member do
+      get 'embed'
+    end
+  end
   resources :chart_types
   devise_for :users
   root 'home#index'
