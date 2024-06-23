@@ -2,8 +2,7 @@
 
 <%= render @chart %>
 <div data-controller="chart"
-     data-chart-chart-type="<%= @chart.chart_type.name %>"
-     data-chart-chart-data="<%= @chart_data.to_s %>">
+    data-chart-chart-data="<%= @chart_data.to_s %>">
 </div>
 <div>
   <%= link_to "Edit this chart", edit_chart_path(@chart) %> |

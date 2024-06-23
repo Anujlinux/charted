@@ -66,3 +66,4 @@ gem "jsbundling-rails", "~> 1.3"
 gem "devise", "~> 4.9"
 gem 'stimulus-rails'
 gem 'turbo-rails'
+gem "rails_charts"

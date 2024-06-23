@@ -25,6 +25,13 @@ module ChartDataGenerator
     {series: [{ name: series_name, data: series_data}], categories: []}
   end
 
+  def self.line_data(rows, columns)
+    series_name = columns[1]
+    series_data = rows.map { |row| [row[0].to_i, row[1].to_i] }
+
+    {series: [{ name: series_name, data: series_data}], categories: []}
+  end
+
   def self.bar_data(rows, columns)
     categories = rows.map { |row| row[0] }
     series = columns[1..-1].map.with_index do |column_name, index|
