@@ -16,6 +16,7 @@ class ChartsController < ApplicationController
 
   def embed
     @chart = Chart.find(params[:id])
+    response.headers.delete('X-Frame-Options')
     @chart_data = ChartDataGenerator.chart_data(@chart).to_json
     render layout: 'embed'
   end
